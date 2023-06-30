@@ -1,43 +1,70 @@
-import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import {useState, useEffect} from 'react';
-import React from 'react';
-import theme from '../../../theme/Theme';  
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Keyboard,
+  KeyboardEvent,
+  Platform,
+} from 'react-native';
+import theme from '../../../theme/Theme';
 import SignInWithGoogleButton from '../../../components/ui-elements/SignInWithGoogleButton';
 import LoginForms from '../../../components/forms/LoginForms';
 import RegisterForms from '../../../components/forms/RegisterForms';
-import {Keyboard, KeyboardEvent} from 'react-native';
 import FadeIn from '../../../components/animations/FadeIn';
 import SlideInFromBottom from '../../../components/animations/SlideInFromBottom';
-
-const LoginRegister = () => {
+import type {RootStackParams} from '../../../types/RootStackParamsType';
+import type {RouteProp, NavigationProp} from '@react-navigation/native';
+type LoginRegisterScreenNavigationProp = NavigationProp<
+  RootStackParams,
+  'LoginRegister'
+>;
+type LoginRegisterScreenRouteProp = RouteProp<RootStackParams, 'LoginRegister'>;
+type Props = {
+  navigation: LoginRegisterScreenNavigationProp;
+  route: LoginRegisterScreenRouteProp;
+};
+const LoginRegister = ({route}: Props) => {
+  const params = route.params;
   const styles = makeStyles(theme);
   const [currentRenderedComponent, setCurrentRenderedComponent] =
     useState<string>('Login');
   const [isTheKeyboardShowing, setIsTheKeyboardShowing] =
     useState<boolean>(false);
   useEffect(() => {
+    const keyboardShowEvent =
+      Platform.OS === 'android' ? 'keyboardDidShow' : 'keyboardWillShow';
+    const keyboardHideEvent =
+      Platform.OS === 'android' ? 'keyboardDidHide' : 'keyboardWillHide';
+
     const keyboardWillShowListener = Keyboard.addListener(
-      'keyboardWillShow',
+      keyboardShowEvent,
       handleKeyboardWillShow,
     );
     const keyboardWillHideListener = Keyboard.addListener(
-      'keyboardWillHide',
+      keyboardHideEvent,
       handleKeyboardWillHide,
     );
+
     return () => {
       keyboardWillShowListener.remove();
       keyboardWillHideListener.remove();
     };
   }, []);
-
+  useEffect(() => {
+    setCurrentRenderedComponent(params?.currentRenderedComponent || 'Login');
+  }, [params]);
   const handleLoginRegisterToggler = () => {
-    setCurrentRenderedComponent((prev:string)=>
-      prev == 'Login' ? 'Register' : 'Login',
+    setCurrentRenderedComponent((prev: string) =>
+      prev === 'Login' ? 'Register' : 'Login',
     );
   };
   const handleKeyboardWillShow = (event: KeyboardEvent) => {
     setIsTheKeyboardShowing(true);
   };
+
   const handleKeyboardWillHide = (event: KeyboardEvent) => {
     setIsTheKeyboardShowing(false);
   };
@@ -45,7 +72,12 @@ const LoginRegister = () => {
   return (
     <SlideInFromBottom style={{flex: 1}}>
       <View style={[styles.pageWrapper]}>
-        <View style={styles.logoWrapper}>
+        <View
+          style={[
+            styles.logoWrapper,
+            currentRenderedComponent === 'Register' &&
+              styles.logoWrapperForRegister,
+          ]}>
           <Image
             style={styles.logoImage}
             source={{
@@ -53,62 +85,67 @@ const LoginRegister = () => {
             }}
           />
         </View>
-        <View
-          style={[
-            !isTheKeyboardShowing
-              ? styles.welcomeWrapper
-              : styles.welcomeWrapperKeyboardActive,
-          ]}>
-          <FadeIn delay={100}>
-            <Text
+
+        {currentRenderedComponent === 'Login' ? (
+          <>
+            <View
               style={[
-                styles.welcomeText,
-                isTheKeyboardShowing && {marginBottom: 8},
+                !isTheKeyboardShowing
+                  ? styles.welcomeWrapper
+                  : styles.welcomeWrapperKeyboardActive,
               ]}>
-              Hoşgeldiniz
-            </Text>
-          </FadeIn>
-          {!isTheKeyboardShowing && (
-            <>
-              <FadeIn delay={200}>
-                <Text style={styles.continueText}>
-                  Devam etmek için lütfen giriş yapın.
+              <FadeIn delay={100}>
+                <Text
+                  style={[
+                    styles.welcomeText,
+                    isTheKeyboardShowing && {marginBottom: 8},
+                  ]}>
+                  Hoşgeldiniz
                 </Text>
               </FadeIn>
-              <SignInWithGoogleButton buttonText="Google hesabınla giriş yap" />
-            </>
-          )}
-        </View>
+              {!isTheKeyboardShowing && (
+                <>
+                  <FadeIn delay={200}>
+                    <Text style={styles.continueText}>
+                      Devam etmek için lütfen giriş yapın.
+                    </Text>
+                  </FadeIn>
+                  <SignInWithGoogleButton buttonText="Google hesabınla giriş yap" />
+                </>
+              )}
+            </View>
 
-        {!isTheKeyboardShowing && (
-          <>
-            <SlideInFromBottom style={styles.orWrapper}>
-              <View style={styles.lineStyle}></View>
-              <View style={styles.orCenterElement}>
-                <Text style={styles.orText}>Ya da</Text>
-              </View>
-              <View style={styles.lineStyle}></View>
+            {!isTheKeyboardShowing && (
+              <>
+                <SlideInFromBottom style={styles.orWrapper}>
+                  <View style={styles.lineStyle} />
+                  <View style={styles.orCenterElement}>
+                    <Text style={styles.orText}>Ya da</Text>
+                  </View>
+                  <View style={styles.lineStyle} />
+                </SlideInFromBottom>
+              </>
+            )}
+            <SlideInFromBottom style={styles.loginFormWrapper}>
+              <LoginForms />
             </SlideInFromBottom>
           </>
-        )}
-        {currentRenderedComponent == 'Login' ? (
-          <SlideInFromBottom style={styles.loginFormWrapper}>
-            <LoginForms />
-          </SlideInFromBottom>
         ) : (
           <SlideInFromBottom style={styles.registerFormWrapper}>
-            <RegisterForms />
+            <RegisterForms
+           
+            />
           </SlideInFromBottom>
         )}
         {isTheKeyboardShowing && (
           <>
             <SlideInFromBottom style={styles.orWrapperKeyboardActive}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <View style={styles.lineStyle}></View>
+                <View style={styles.lineStyle} />
                 <View style={styles.orCenterElement}>
                   <Text style={styles.orText}>Ya da</Text>
                 </View>
-                <View style={styles.lineStyle}></View>
+                <View style={styles.lineStyle} />
               </View>
               <View style={{justifyContent: 'center', alignItems: 'center'}}>
                 <SignInWithGoogleButton buttonText="Google hesabınla giriş yap" />
@@ -124,7 +161,7 @@ const LoginRegister = () => {
           ]}>
           <TouchableOpacity onPress={handleLoginRegisterToggler}>
             <Text style={styles.togglerTouchableText}>
-              {currentRenderedComponent == 'Login'
+              {currentRenderedComponent === 'Login'
                 ? 'Henüz üye değil misiniz?'
                 : 'Zaten üye misiniz?'}
             </Text>
@@ -145,7 +182,10 @@ const makeStyles = (theme: any) =>
       backgroundColor: '#FFFFFF',
     },
     logoWrapper: {
-      flex: 0.1,
+      flex: 0.2,
+    },
+    logoWrapperForRegister: {
+      flex: 0.4,
     },
     logoImage: {
       flex: 1,
@@ -206,7 +246,7 @@ const makeStyles = (theme: any) =>
       paddingHorizontal: 16,
     },
     registerFormWrapper: {
-      flex: 0.5,
+      flex: 1,
       paddingHorizontal: 16,
     },
     togglerWrapper: {
