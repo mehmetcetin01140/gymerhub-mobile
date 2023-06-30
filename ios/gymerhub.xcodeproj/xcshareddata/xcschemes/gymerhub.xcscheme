@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "gymapp.app"
-               BlueprintName = "gymapp"
-               ReferencedContainer = "container:gymapp.xcodeproj">
+               BuildableName = "gymerhub.app"
+               BlueprintName = "gymerhub"
+               ReferencedContainer = "container:gymerhub.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "gymappTests.xctest"
-               BlueprintName = "gymappTests"
-               ReferencedContainer = "container:gymapp.xcodeproj">
+               BuildableName = "gymerhubTests.xctest"
+               BlueprintName = "gymerhubTests"
+               ReferencedContainer = "container:gymerhub.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "gymapp.app"
-            BlueprintName = "gymapp"
-            ReferencedContainer = "container:gymapp.xcodeproj">
+            BuildableName = "gymerhub.app"
+            BlueprintName = "gymerhub"
+            ReferencedContainer = "container:gymerhub.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "gymapp.app"
-            BlueprintName = "gymapp"
-            ReferencedContainer = "container:gymapp.xcodeproj">
+            BuildableName = "gymerhub.app"
+            BlueprintName = "gymerhub"
+            ReferencedContainer = "container:gymerhub.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

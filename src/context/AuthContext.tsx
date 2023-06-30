@@ -3,10 +3,8 @@ import React, {
   useState,
   useEffect,
   ReactNode,
-  useContext,
 } from 'react';
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
-import {useNavigation} from '@react-navigation/native';
 import * as RootNavigation from '../helpers/navigation/RootNavigation';
 import {firebaseErrorMapper} from '../helpers/firebase/FirebaseErrorMapper';
 import {

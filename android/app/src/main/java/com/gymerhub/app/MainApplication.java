@@ -1,4 +1,4 @@
-package com.gymapp;
+package com.gymerhub.app;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

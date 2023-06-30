@@ -1,5 +1,5 @@
 export type RootStackParams = {
-    LoginRegister:undefined
+  LoginRegister: { currentRenderedComponent?: string };
     MemberProfile:undefined
     GymOwnerProfile:undefined
     MemberList:undefined

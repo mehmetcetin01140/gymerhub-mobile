@@ -94,9 +94,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.gymapp"
+    namespace "com.gymerhub.app"
     defaultConfig {
-        applicationId "com.gymapp"
+        applicationId "com.gymerhub.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

@@ -7,12 +7,12 @@ import theme from '../../theme/Theme';
 import Button from '../ui-elements/Button';
 import loginFormValidationSchema from '../../valitadionSchemas/LoginFormValidationSchema';
 const LoginForms = () => {
-  const {signIn, user, signOut} = useContext(AuthContext);
+  const {signIn} = useContext(AuthContext);
   const styles = makeStyles(theme);
   const loginFormik = useFormik({
     initialValues: {
-      email: 'abuzer@gmail.com',
-      password: '123456',
+      email: '',
+      password: '',
     },
     validationSchema: loginFormValidationSchema,
     validateOnChange: false,
