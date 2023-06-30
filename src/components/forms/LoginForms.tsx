@@ -6,6 +6,7 @@ import Input from '../form-elements/Input';
 import theme from '../../theme/Theme';
 import Button from '../ui-elements/Button';
 import loginFormValidationSchema from '../../valitadionSchemas/LoginFormValidationSchema';
+import {ALERT_TYPE, Toast} from 'react-native-alert-notification';
 const LoginForms = () => {
   const {signIn} = useContext(AuthContext);
   const styles = makeStyles(theme);
@@ -14,14 +15,32 @@ const LoginForms = () => {
       email: '',
       password: '',
     },
-    validationSchema: loginFormValidationSchema,
+
     validateOnChange: false,
     validateOnBlur: false,
-    onSubmit: async values => {
-      await signIn(values.email, values.password);
-    },
+    onSubmit: onSubmit
   });
-
+  function onSubmit() {
+  loginFormValidationSchema
+      .validate(loginFormik.values, {abortEarly: false})
+      .then(() => {
+        signIn(
+          loginFormik.values.email,
+          loginFormik.values.password,
+        );
+      })
+      .catch(validationErrors => {
+        const errorMessages = validationErrors.inner.map(
+          (error: any) => error.message,
+        );
+        Toast.show({
+          type: ALERT_TYPE.DANGER,
+          title: 'Hata',
+          textBody: errorMessages.join('\n'),
+          autoClose: 4000,
+        });
+      });
+  }
   const formikValues = loginFormik.values;
   const formikErrors = loginFormik.errors;
   return (
