@@ -37,7 +37,7 @@ function App(): JSX.Element {
                     screenOptions={{
                       headerShown: false,
                     }}
-                    initialRouteName="LoginRegister">
+                    initialRouteName="MuscleExercises">
                     <Stack.Screen
                       name="LoginRegister"
                       component={LoginRegister}

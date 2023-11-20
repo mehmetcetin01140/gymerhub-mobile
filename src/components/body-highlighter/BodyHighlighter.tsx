@@ -23,7 +23,7 @@ export interface Root2 {
   img?: string[];
   steps: string[];
   tips?: string[];
-  intensity?: number; // intensity özelliği eklendi
+  intensity?: number; 
 }
 
 export default function BodyHighlighter({data, id}: Props) {
@@ -67,7 +67,7 @@ export default function BodyHighlighter({data, id}: Props) {
       },
       ...(item.secondary || []).map(secondaryItem => ({
         slug: replaceSlug(secondaryItem),
-        intensity: 1, // İkincil kaslar için varsayılan yoğunluk değeri 1 olarak ayarlandı.
+        intensity: 1,
         color: ''
       })),
     ];

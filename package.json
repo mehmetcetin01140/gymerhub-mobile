@@ -9,6 +9,10 @@
     "start": "react-native start",
     "test": "jest"
   },
+  "preinstall": "([ ! -f package-lock.json ] && npm install --package-lock-only --ignore-scripts --no-audit); npx npm-force-resolutions",
+  "resolutions": {
+    "graceful-fs": "13.2.0"
+  },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4.4.7",
     "@react-native-firebase/app": "^18.1.0",
